@@ -12,7 +12,6 @@ export default function Home() {
       <div className="relative w-[90%] max-w-[1000px] h-auto mt-20">
         <ModelRenderer />
       </div>
-      Hello World
     </div>
   );
 }
