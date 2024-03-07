@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next with Animated Avatar Offload
 
-## Getting Started
+### This Example Code is a Part of an Article: Optimizing 3D Model Rendering in Next.js by Reducing Blocking Time Using React Fiber Offscreen
 
-First, run the development server:
+<hr />
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+##### Live Url (Without Web Worker): [Deployment](https://next-with-animated-avatar.vercel.app/)
+##### Live Url (With Web Worker): [Deployment](https://next-with-animated-avatar-offload.vercel.app/)
+##### Article Link: [Medium](https://faraasat.medium.com/optimizing-3d-model-rendering-in-next-js-by-reducing-blocking-time-using-react-fiber-offscreen-11bd39ca7a67)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<hr />
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Background and Problem Statement: 
+When dealing with CPU-intensive operations on the web, such as rendering 3D models, we often encounter sluggishness and unresponsiveness. The initial loading time of a web page significantly impacts user experience, and rendering complex 3D content can exacerbate this issue. To address this challenge, we’ll leverage Web Workers to load 3D models behind the scenes, thereby reducing blocking time.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Optimization Approach:
 
-## Learn More
+#### 1. React Three Fiber and Web Workers: 
+- We kick off our optimization journey by installing the `@react-three/offscreen` dependency, which allows us to render 3D models using React Three Fiber within Web Workers. This separation enables smoother interactions during the initial page load.
+#### 2. Refactoring the Rendering Logic: 
+- In our existing code, the 3D model rendering logic resides within the main component. To improve performance, we’ll split this into separate files. First, we create a `scene.tsx` file that contains the scene setup (ambient lighting, environment, etc.). Then, we create a worker named `worker.tsx` that imports the scene. By doing so, we offload the rendering work from the main thread, enhancing responsiveness.
+#### 3. Web Workers in Action: 
+- The `worker.tsx` file utilizes Web Workers to handle the 3D model rendering. This approach ensures that CPU-intensive tasks don’t block the main thread, allowing the rest of the page to remain interactive. By moving the heavy lifting to a separate thread, we achieve a more fluid user experience.
 
-To learn more about Next.js, take a look at the following resources:
+### Conclusion:
+In summary, by adopting React Fiber Offscreen and Web Workers, we optimize the loading time of 3D models in Next.js applications. This technique enhances performance, making our web pages more responsive and delightful for users1. If you’re interested in learning more about Web Workers or other Next.js optimizations, feel free to explore related articles
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Result:
+- Performance and Blocking Time when using Web Workers:
+  
+![1_G7tiXabttx11biy9QNdgDw](https://github.com/faraasat/next-with-animated-avatar-offload/assets/63093876/d70096e6-a4cd-4f00-8e6e-28bb323e1b24)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Performance and Blocking Time when not using Web Workers:
+  
+![1_l010ytw5HRTy7xj5bismXA](https://github.com/faraasat/next-with-animated-avatar-offload/assets/63093876/3e5e9c46-eebd-4650-919a-7b7defcae9a8)
